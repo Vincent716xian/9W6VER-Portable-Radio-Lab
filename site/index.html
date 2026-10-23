@@ -1,27 +1,93 @@
-
-<!DOCTYPE html>
-<html lang="en">
+<!doctype html>
+<html lang="zh-Hans">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>9W6VER Radio Lab</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#09111f">
+  <title>9W6VER · Portable Radio Lab</title>
   <style>
-    body {
-      margin: 0;
-      background: #101827;
-      color: white;
-      font-family: Arial, sans-serif;
-      text-align: center;
-      padding: 80px 20px;
-    }
-    h1 { color: #40d9b5; }
+    :root{color-scheme:dark;--bg:#09111f;--panel:#101c30;--panel2:#14243b;--line:#263750;--ink:#eff7ff;--muted:#9ab1cb;--aqua:#63efdb;--amber:#f5bf72;--blue:#80b9ff}
+    *{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;min-height:100vh;background:radial-gradient(ellipse 95% 50% at 86% -12%,#173c51 0%,transparent 70%),var(--bg);font-family:system-ui,-apple-system,"Segoe UI",Arial,"Noto Sans SC",sans-serif;color:var(--ink)}
+    button,textarea,input{font:inherit}button{cursor:pointer}button:focus-visible,textarea:focus-visible,input:focus-visible{outline:2px solid var(--aqua);outline-offset:3px}
+    .layout{max-width:1170px;margin:0 auto;padding:24px 20px 65px}.top{display:flex;justify-content:space-between;gap:16px;align-items:center;padding:3px 0 24px;border-bottom:1px solid var(--line)}
+    .brand{display:flex;align-items:center;gap:13px}.mark{width:45px;height:45px;display:grid;place-items:center;border-radius:13px;border:1px solid #4cbda9;background:linear-gradient(135deg,#173f4e,#102d41);color:var(--aqua);font-size:24px;font-weight:800;letter-spacing:-2px}
+    .brand small{color:var(--muted);display:block;letter-spacing:2px;font-size:11px;margin-top:3px}.brand strong{letter-spacing:.7px;font-size:19px}.chip{border:1px solid #2a625e;color:#a6f4dd;border-radius:100px;padding:9px 12px;font-size:12px;background:#163834;white-space:nowrap}.chip:before{content:'●';margin-right:7px;color:#5df4aa}
+    .hero{padding:44px 0 29px}.eyebrow{font-size:12px;font-weight:800;letter-spacing:2.3px;color:var(--aqua);text-transform:uppercase}.hero h1{font-size:clamp(33px,5.8vw,61px);line-height:1.12;letter-spacing:-1.8px;margin:11px 0 13px;max-width:850px}.hero h1 span{color:var(--aqua)}.hero p{margin:0;max-width:720px;line-height:1.7;font-size:15px;color:var(--muted)}
+    .stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin:10px 0 20px}.stat{background:#101c2f;border:1px solid var(--line);border-radius:14px;padding:16px}.stat small{color:var(--muted);font-size:12px;display:block;margin-bottom:8px}.stat strong{font-size:16px;letter-spacing:.2px}.stat .good{color:var(--aqua)}.stat .warn{color:var(--amber)}
+    .grid{display:grid;grid-template-columns:1.12fr .88fr;gap:18px}.card{border:1px solid var(--line);border-radius:20px;background:linear-gradient(180deg,#142139,#0e1a2b);padding:24px;min-width:0;box-shadow:0 13px 40px #0002}.card h2{font-size:20px;margin:0 0 7px;letter-spacing:-.35px}.desc{color:var(--muted);font-size:13px;line-height:1.65;margin:0 0 21px}.section-head{display:flex;justify-content:space-between;gap:12px;align-items:center}.tag{color:var(--blue);background:#1b344f;border:1px solid #325474;border-radius:7px;padding:6px 9px;font-size:11px;white-space:nowrap}
+    textarea{resize:vertical;min-height:85px;width:100%;border-radius:11px;border:1px solid #34506b;background:#0a1424;color:#f5f9ff;padding:15px;line-height:1.6}.row{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-top:13px}.action{background:var(--aqua);color:#073035;border:1px solid var(--aqua);border-radius:10px;padding:10px 16px;font-weight:800;min-height:44px}.action:hover{filter:brightness(1.08)}.secondary{background:#1c2b40;color:var(--ink);border:1px solid #38506a;border-radius:10px;padding:10px 15px;font-weight:700;min-height:44px}.secondary:hover,.key:hover{background:#273e57}.control{display:flex;align-items:center;gap:8px;color:var(--muted);font-size:12px}.control input{accent-color:var(--aqua);max-width:110px}.result{min-height:64px;background:#07111e;border:1px solid #254052;border-radius:11px;padding:13px 16px;line-height:1.7;overflow-wrap:anywhere;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;color:#aef5e7;letter-spacing:1px}.lab-note{font-size:12px;color:var(--muted);line-height:1.7;margin:13px 0 0}
+    .dtmf{display:grid;grid-template-columns:repeat(4,1fr);gap:9px}.key{border-radius:12px;border:1px solid #344c65;background:#1a2c42;color:white;font-size:21px;font-weight:800;height:58px;touch-action:manipulation}.key:active,.key.pressed{background:#235c69;border-color:#65e8d9;color:var(--aqua)}.display{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;border-radius:10px;background:#06111f;border:1px solid #263d54;padding:10px 13px}.display span{color:var(--muted);font-size:12px}.display strong{color:var(--aqua);font:700 23px ui-monospace,SFMono-Regular,Menlo,monospace;min-height:28px;overflow-wrap:anywhere;text-align:right}
+    .lower{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:18px}.info-card{background:#0e1a2b;border:1px solid var(--line);border-radius:17px;padding:22px}.info-card h3{margin:0 0 10px;font-size:16px}.info-card p{color:var(--muted);font-size:13px;line-height:1.65;margin:0}.info-card strong{color:var(--ink)}.notice{border-left:3px solid var(--amber);padding-left:13px;margin-top:13px!important}
+    .footer{padding-top:25px;display:flex;justify-content:space-between;gap:10px;color:#88a0bc;font-size:11px;line-height:1.8;flex-wrap:wrap}.footer b{color:#c5dcf1}
+    @media(max-width:780px){.grid,.lower{grid-template-columns:1fr}.stats{grid-template-columns:repeat(2,minmax(0,1fr))}.card{padding:19px}.hero{padding-top:32px}.hero h1{letter-spacing:-.8px}}
+    @media(max-width:450px){.brand strong{font-size:15px}.brand small{font-size:9px;letter-spacing:1px}.mark{width:38px;height:38px;font-size:19px}.chip{font-size:10px;padding:7px}.layout{padding:18px 13px 36px}.stats{gap:8px}.stat{padding:12px}.stat strong{font-size:13px}}
   </style>
 </head>
 <body>
-  <h1>9W6VER RADIO LAB</h1>
-  <h2>Portable Amateur Radio Lab</h2>
-  <p>Scout Radio Education Platform</p>
-  <p>18th Tawau Scout Troop</p>
-  <p>System Ready</p>
+  <main class="layout">
+    <header class="top">
+      <div class="brand"><div class="mark">9W</div><div><strong>9W6VER · RADIO LAB</strong><small>PORTABLE AMATEUR RADIO LAB</small></div></div>
+      <div class="chip">OFFLINE READY</div>
+    </header>
+    <section class="hero">
+      <div class="eyebrow">LEARN · EXPLORE · COMMUNICATE</div>
+      <h1>探索无线电，<br><span>从这里开始。</span></h1>
+      <p>为童军活动设计的便携式业余无线电教学平台。第一阶段已包含可操作的 Morse Code 与 DTMF 声音实验；不需要 Internet，也不需要接入电台。</p>
+    </section>
+    <section class="stats" aria-label="实验室状态">
+      <div class="stat"><small>运行模式 / MODE</small><strong class="good">LOCAL · OFFLINE</strong></div>
+      <div class="stat"><small>Morse Code</small><strong class="good">READY</strong></div>
+      <div class="stat"><small>DTMF Generator</small><strong class="good">READY</strong></div>
+      <div class="stat"><small>SvxLink / EchoLink</small><strong class="warn">NOT CONNECTED</strong></div>
+    </section>
+    <section class="grid">
+      <article class="card" id="morse">
+        <div class="section-head"><h2>01 · Morse Code Lab</h2><span class="tag">LIVE AUDIO</span></div>
+        <p class="desc">输入英文、数字或常见标点，点击播放收听摩尔斯电码。可调节发报速度与声音频率。</p>
+        <label for="morse-text" style="display:block;font-size:12px;color:var(--muted);margin-bottom:8px">发送内容 / TEXT</label>
+        <textarea id="morse-text" spellcheck="false" maxlength="180">CQ CQ DE 9W6VER</textarea>
+        <div class="row"><label class="control">速度 <input id="speed" type="range" min="5" max="30" value="15"><output id="speed-value">15 WPM</output></label><label class="control">音调 <input id="pitch" type="range" min="350" max="950" step="50" value="650"><output id="pitch-value">650 Hz</output></label></div>
+        <div class="row"><button type="button" class="action" id="morse-play">▶ 播放 Morse</button><button type="button" class="secondary" id="morse-stop">■ 停止</button><button type="button" class="secondary" id="sos">SOS 示例</button></div>
+        <p class="lab-note">电码预览 / ENCODED MESSAGE</p>
+        <div class="result" id="morse-code" aria-live="polite"></div>
+        <p class="lab-note" id="morse-status" aria-live="polite">点击播放后，浏览器会使用设备扬声器输出声音。</p>
+      </article>
+      <article class="card" id="dtmf">
+        <div class="section-head"><h2>02 · DTMF Tone Lab</h2><span class="tag">DUAL-TONE</span></div>
+        <p class="desc">按下按键，体验无线电控制及电话系统常用的双音多频信号。A–D 为扩展 DTMF 按键。</p>
+        <div class="display"><span>LAST KEY</span><strong id="dtmf-last">—</strong></div>
+        <div class="dtmf" id="dtmf-pad" aria-label="DTMF keypad"></div>
+        <p class="lab-note">每次点击会产生约 180 ms 的两种频率组合。此版本只在手机或电脑播放声音，<strong>不会向无线电发射</strong>。</p>
+        <div class="row"><button class="secondary" type="button" id="dtmf-clear">清除按键记录</button></div>
+        <div class="result" id="dtmf-history" style="min-height:42px" aria-label="DTMF history">—</div>
+      </article>
+    </section>
+    <section class="lower">
+      <div class="info-card"><h3>03 · Parrot / Echo Test</h3><p>规划中：回声录音与语音回放。普通 HTTP 内网页面通常无法获得手机麦克风权限，因此这一模块要先解决 HTTPS 或采用合适的本地音频方案。</p><p class="notice">目前尚未开放录音，不会请求麦克风权限。</p></div>
+      <div class="info-card"><h3>04 · Raspberry Pi / SvxLink</h3><p>规划中：显示真实的 SvxLink 服务状态、EchoLink 连接及音频接口测试。本网页目前属于独立离线模拟器，<strong>不代表已经与 SvxLink 连接</strong>。</p><p class="notice">部署到 Pi 后，可以继续添加受保护的本地控制接口。</p></div>
+    </section>
+    <footer class="footer"><span><b>9W6VER PORTABLE RADIO LAB</b> · Version 0.1 · Browser Demo</span><span>Scout Radio Education · 18th Tawau Scout Troop</span></footer>
+  </main>
+  <script>
+    'use strict';
+    const $ = id => document.getElementById(id);
+    const CODES = {A:'.-',B:'-...',C:'-.-.',D:'-..',E:'.',F:'..-.',G:'--.',H:'....',I:'..',J:'.---',K:'-.-',L:'.-..',M:'--',N:'-.',O:'---',P:'.--.',Q:'--.-',R:'.-.',S:'...',T:'-',U:'..-',V:'...-',W:'.--',X:'-..-',Y:'-.--',Z:'--..','0':'-----','1':'.----','2':'..---','3':'...--','4':'....-','5':'.....','6':'-....','7':'--...','8':'---..','9':'----.','.':'.-.-.-',',':'--..--','?':'..--..','/':'-..-.','=':'-...-','+':'.-.-.','-':'-....-',':':'---...'};
+    let ctx = null, morseOscillators = [], morsePlaying = false, endTimer = null;
+    function audioContext(){const AC = window.AudioContext || window.webkitAudioContext;if(!AC)throw new Error('浏览器不支持 Web Audio');if(!ctx)ctx=new AC();return ctx;}
+    async function activateAudio(){const a=audioContext();await a.resume();return a;}
+    function updatePreview(){const input=$('morse-text').value.toUpperCase();$('morse-code').textContent=input.split('').map(c=>c===' '?' / ':(CODES[c]||'')).filter(Boolean).join(' ') || '—';}
+    function stopMorse(){if(endTimer)clearTimeout(endTimer);endTimer=null;morseOscillators.forEach(osc=>{try{osc.stop();}catch(_e){}});morseOscillators=[];morsePlaying=false;$('morse-play').disabled=false;$('morse-status').textContent='已停止 / Ready to play';}
+    function beep(a,start,duration,freq,gain=0.11){const osc=a.createOscillator(),vol=a.createGain();osc.type='sine';osc.frequency.setValueAtTime(freq,start);vol.gain.setValueAtTime(0.0001,start);vol.gain.exponentialRampToValueAtTime(gain,start+Math.min(.008,duration/4));vol.gain.setValueAtTime(gain,Math.max(start+.009,start+duration-.008));vol.gain.exponentialRampToValueAtTime(.0001,start+duration);osc.connect(vol).connect(a.destination);osc.start(start);osc.stop(start+duration+.014);return osc;}
+    $('morse-play').addEventListener('click',async()=>{try{stopMorse();const a=await activateAudio();const speed=Number($('speed').value),tone=Number($('pitch').value),unit=1.2/speed;let t=a.currentTime+.035;let played=0;const input=$('morse-text').value.toUpperCase();for(let i=0;i<input.length;i++){const c=input[i];if(c===' '){t+=4*unit;continue;}const code=CODES[c];if(!code)continue;for(let j=0;j<code.length;j++){const dur=(code[j]==='-'?3:1)*unit;const osc=beep(a,t,dur,tone);morseOscillators.push(osc);played++;t+=dur;if(j!==code.length-1)t+=unit;}t+=3*unit;}if(!played){$('morse-status').textContent='请先输入支持的英文、数字或标点。';return;}morsePlaying=true;$('morse-play').disabled=true;$('morse-status').textContent='正在播放 / Transmitting audio locally…';endTimer=setTimeout(()=>{morseOscillators=[];morsePlaying=false;$('morse-play').disabled=false;$('morse-status').textContent='播放完成 / Finished';endTimer=null;},Math.ceil((t-a.currentTime)*1000)+40);}catch(err){$('morse-status').textContent='音频无法启动：'+err.message;}});
+    $('morse-stop').addEventListener('click',stopMorse);
+    $('sos').addEventListener('click',()=>{$('morse-text').value='SOS';updatePreview();});
+    $('morse-text').addEventListener('input',updatePreview);
+    for(const [slider,output,suffix] of [['speed','speed-value',' WPM'],['pitch','pitch-value',' Hz']])$(slider).addEventListener('input',()=>{$(output).textContent=$(slider).value+suffix;});
+    const ROW_FREQ=[697,770,852,941],COL_FREQ=[1209,1336,1477,1633],KEYS=[['1','2','3','A'],['4','5','6','B'],['7','8','9','C'],['*','0','#','D']];let history='';
+    async function dial(key,r,c,button){try{const a=await activateAudio(),start=a.currentTime+.015;beep(a,start,.18,ROW_FREQ[r],.06);beep(a,start,.18,COL_FREQ[c],.06);$('dtmf-last').textContent=key;history=(history+key).slice(-40);$('dtmf-history').textContent=history;button.classList.add('pressed');setTimeout(()=>button.classList.remove('pressed'),190);}catch(err){$('dtmf-history').textContent='音频不可用：'+err.message;}}
+    KEYS.forEach((row,r)=>row.forEach((key,c)=>{const button=document.createElement('button');button.type='button';button.className='key';button.textContent=key;button.setAttribute('aria-label','DTMF '+key);button.addEventListener('click',()=>dial(key,r,c,button));$('dtmf-pad').appendChild(button);}));
+    $('dtmf-clear').addEventListener('click',()=>{history='';$('dtmf-last').textContent='—';$('dtmf-history').textContent='—';});
+    updatePreview();
+  </script>
 </body>
 </html>
